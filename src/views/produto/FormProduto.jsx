@@ -146,7 +146,7 @@ class FormProduto extends React.Component{
 										onClick={this.listar}
 										>
 										<Icon name='reply' />
-										Voltar
+										<Link to={'/list-produto'}>Voltar</Link>
 									</Button>
 
 									<Container textAlign='right'>
