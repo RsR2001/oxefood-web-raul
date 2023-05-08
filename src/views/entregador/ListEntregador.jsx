@@ -64,7 +64,7 @@ class ListEntregador extends React.Component{
                             </Button>
                             <br/><br/><br/>
                       
-                           <Table color='orange' sortable celled>
+                           <Table color='orange' sortable celled style={{marginLeft:'-50%'}}>
 
                                <Table.Header>
                                    <Table.Row>
@@ -84,8 +84,7 @@ class ListEntregador extends React.Component{
                                        <Table.HeaderCell>Endereço Uf</Table.HeaderCell>
                                        <Table.HeaderCell>Endereço Complemento</Table.HeaderCell>
                                        <Table.HeaderCell>ativo</Table.HeaderCell>
-                                       <Table.HeaderCell textAlign='center' width={2}>Ações</Table.HeaderCell>
-                                   </Table.Row>
+                                       <Table.HeaderCell textAlign='center' width={2} style={{paddingRight:'40px', paddingLeft:'40px'}}>Ações</Table.HeaderCell>                                   </Table.Row>
                                </Table.Header>
                           
                                <Table.Body>
@@ -123,7 +122,12 @@ class ListEntregador extends React.Component{
                                                    icon='trash'
                                                    color='red'
                                                    title='Clique aqui para remover este cliente' />
-
+                                                  <Button
+                                                   inverted
+                                                   circular
+                                                   icon='eye'
+                                                   color='yellow'
+                                                   title='Clique aqui para remover este cliente' />
                                            </Table.Cell>
                                        </Table.Row>
                                    ))}
