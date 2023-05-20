@@ -8,7 +8,6 @@ class ListEntregador extends React.Component{
     state = {
  
         listaEntregadores: []
-       
     }
  
     componentDidMount = () => {
@@ -115,19 +114,19 @@ class ListEntregador extends React.Component{
                                                    circular
                                                    icon='edit'
                                                    color='blue'
-                                                   itle='Clique aqui para editar os dados deste cliente' /> &nbsp;
+                                                   itle='Clique aqui para editar os dados deste Entregador' /> &nbsp;
                                                    <Button
                                                    inverted
                                                    circular
                                                    icon='trash'
                                                    color='red'
-                                                   title='Clique aqui para remover este cliente' />
+                                                   title='Clique aqui para remover este Entregador' />
                                                   <Button
                                                    inverted
                                                    circular
                                                    icon='eye'
                                                    color='yellow'
-                                                   title='Clique aqui para remover este cliente' />
+                                                   title='Clique aqui para remover este Entregador' />
                                            </Table.Cell>
                                        </Table.Row>
                                    ))}

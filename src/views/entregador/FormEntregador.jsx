@@ -1,8 +1,8 @@
 import axios from "axios";
 import React from "react";
 import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 import { Link } from "react-router-dom";
+import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 
 class FormEntregador extends React.Component{
@@ -326,7 +326,7 @@ class FormEntregador extends React.Component{
 											
 										>
 											<Icon name='save' />
-											Salvar
+											salvar
 										</Button>
 										
 									</Container>
