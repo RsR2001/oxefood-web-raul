@@ -6,7 +6,8 @@ import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
 class ListCliente extends React.Component{
 
     state = {
- 
+        openModal: false,
+        idRemover: null,
         listaClientes: []
        
     }
@@ -27,7 +28,7 @@ class ListCliente extends React.Component{
         })
  
     };
- 
+
     formatarData = (dataParam) => {
  
         let data = new Date(dataParam);
@@ -37,6 +38,45 @@ class ListCliente extends React.Component{
        
         return dataFormatada
     };
+
+    confirmaRemover = (id) => {
+
+        this.setState({
+            openModal: true,
+            idRemover: id
+             })  
+        }
+        
+        setOpenModal = (val) => {
+
+            this.setState({
+                openModal: val
+            })
+       
+        };
+        remover = async () => {
+
+            await axios.delete(ENDERECO_API + 'api/cliente/' + this.state.idRemover)
+            .then((response) => {
+       
+                this.setState({ openModal: false })
+                console.log('Cliente removido com sucesso.')
+       
+                axios.get(ENDERECO_API + "api/cliente")
+                .then((response) => {
+               
+                    this.setState({
+                        listaClientes: response.data
+                    })
+                })
+            })
+            .catch((error) => {
+                this.setState({  openModal: false })
+                console.log('Erro ao remover um cliente.')
+            })
+     };
+     
+    
     render(){
         return(
             <div>
@@ -89,18 +129,25 @@ class ListCliente extends React.Component{
                                            <Table.Cell>{cliente.foneFixo}</Table.Cell>
                                            <Table.Cell textAlign='center'>
                                               
-                                               <Button
-                                                   inverted
-                                                   circular
-                                                   icon='edit'
-                                                   color='blue'
-                                                   itle='Clique aqui para editar os dados deste cliente' /> &nbsp;
-                                                   <Button
-                                                   inverted
-                                                   circular
-                                                   icon='trash'
-                                                   color='red'
-                                                   title='Clique aqui para remover este cliente' />
+                                           <Button
+                                               inverted
+                                               circular
+                                               color='green'
+                                               title='Clique aqui para editar os dados deste cliente'
+                                               icon>
+                                               <Link to="/form-cliente" state={{id: cliente.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+                                           </Button> &nbsp;
+
+                                           <Button
+                                               inverted
+                                               circular
+                                               color='red'
+                                               title='Clique aqui para remover este cliente'
+                                               icon
+                                               onClick={e => this.confirmaRemover(cliente.id)}>
+                                               <Icon name='trash' />
+                                           </Button>
+
 
                                            </Table.Cell>
                                        </Table.Row>

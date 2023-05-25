@@ -1,40 +1,58 @@
 import axios from "axios";
-import React from "react";
+import React, { default as React, default as React, useEffect, useState } from "react";
 import InputMask from 'react-input-mask';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
-class FormCliente extends React.Component{
 
-	state = {
+export default function FormCliente () {
 
-		nome: null,
-		cpf: null,
-		dataNascimento: null,
-		foneCelular: null,
-		foneFixo: null
-	}
-	salvar = () => {
+	const { state } = useLocation();
+	const [nome, setNome] = useState();
+	const [cpf, setCpf] = useState();
+	const [dataNascimento, setDataNascimento] = useState();
+	const [foneCelular, setFoneCelular] = useState();
+	const [foneFixo, setFoneFixo] = useState();
 
-		let clienteRequest = {
-
-			nome: this.state.nome,
-			cpf: this.state.cpf,
-			dataNascimento: this.state.dataNascimento,
-			foneCelular: this.state.foneCelular,
-			foneFixo: this.state.foneFixo
+	useEffect(() => {
+		if (state != null && state.id != null) {
+			axios.get(ENDERECO_API + "api/cliente/" + state.id)
+.then((response) => {
+						   setIdCliente(response.data.id)
+						   setNome(response.data.nome)
+						   setCpf(response.data.cpf)
+						   setDataNascimento(response.data.dataNascimento)
+						   setFoneCelular(response.data.foneCelular)
+						   setFoneFixo(response.data.foneFixo)
+			})
 		}
-	
-		axios.post("http://localhost:8080/api/cliente", clienteRequest)
-		.then((response) => {
-			console.log('Cliente cadastrado com sucesso.')
-		})
-		.catch((error) => {
-			console.log('Erro ao incluir o um cliente.')
-		})
+}, [state])
+
+
+function salvar() {
+
+	let clienteRequest = {
+		nome: nome,
+		cpf: cpf,
+		dataNascimento: dataNascimento,
+		foneCelular: foneCelular,
+		foneFixo: foneFixo
+	}
+   
+	if (idCliente != null) { //Alteração:
+		axios.put(ENDERECO_API + "api/cliente/" + idCliente, clienteRequest)
+		.then((response) => { console.log('Cliente alterado com sucesso.') })
+		.catch((error) => { console.log('Erro ao alter um cliente.') })
+	} else { //Cadastro:
+		axios.post(ENDERECO_API + "api/cliente", clienteRequest)
+		.then((response) => { console.log('Cliente cadastrado com sucesso.') })
+		.catch((error) => { console.log('Erro ao incluir o cliente.') })
 	}
 
+}
 
-    render(){
+
+
+
         return(
             <div>
 
@@ -57,16 +75,16 @@ class FormCliente extends React.Component{
 										fluid
 										label='Nome'
 										maxLength="100"
-										value={this.state.nome}
-			onChange={e => this.setState({nome: e.target.value})}
+										value={nome}
+			onChange={e =>setState(target.value)}
 
 									/>
 
 									<Form.Input
 										fluid
 										label='CPF'
-										value={this.state.cpf}
-				onChange={e => this.setState({cpf: e.target.value})} 
+										value={cpf}
+				onChange={e => setState(target.value)} 
 										>
 										<InputMask 
 										mask="999.999.999-99"/>
@@ -81,8 +99,8 @@ class FormCliente extends React.Component{
 										fluid
 										label='Fone Celular'
                                         width={6}
-										value={this.state.foneCelular}
-				onChange={e => this.setState({foneCelular: e.target.value})}
+										value={foneCelular}
+				onChange={e =>setState(target.value)}
 										>
 										<InputMask 
 										mask="(99) 9999.9999" /> 
@@ -93,8 +111,8 @@ class FormCliente extends React.Component{
 										fluid
 										label='Fone Fixo'
                                         width={6}
-										value={this.state.foneFixo}
-				onChange={e => this.setState({foneFixo: e.target.value})}>
+										value={foneFixo}
+				onChange={e => setState(target.value)}>
 										<InputMask 
 										mask="(99) 9999.9999" /> 
 									</Form.Input>
@@ -102,8 +120,8 @@ class FormCliente extends React.Component{
                                         fluid
                                         label='Data Nascimento'
                                         width={6}
-										value={this.state.dataNascimento}
-				onChange={e => this.setState({dataNascimento: e.target.value})}
+										value={dataNascimento}
+				onChange={e => setState(target.value)}
                                     >
                                         <InputMask 
                                             mask="99/99/9999" 
@@ -132,19 +150,19 @@ class FormCliente extends React.Component{
 
 									<Container textAlign='right'>
 										
-										<Button
-											inverted
-											circular
-											icon
-											labelPosition='left'
-											color='blue'
-											floated='right'
-											onClick={this.salvar}
-											
-										>
-											<Icon name='save' />
-											Salvar
-										</Button>
+									<Button
+                                       inverted
+                                       circular
+                                       icon
+                                       labelPosition='left'
+                                       color='blue'
+                                       floated='right'
+                                       onClick={() => salvar()}
+>
+                                       <Icon name='save' />
+                                       Salvar
+                                    </Button>
+
 										
 									</Container>
 
@@ -154,9 +172,28 @@ class FormCliente extends React.Component{
 						</div>
                     </Container>
                 </div>
+				<Modal
+                   			basic
+                   			onClose={() => this.setOpenModal(false)}
+                   			onOpen={() => this.setOpenModal(true)}
+                   			open={this.state.openModal}
+               			>
+                   			<Header icon>
+                       				<Icon name='trash' />
+                       				<div style={{marginTop: '5%'}}> Tem certeza que deseja remover esse registro? </div>
+                   			</Header>
+                   			<Modal.Actions>
+                       				<Button basic color='red' inverted onClick={() => this.setOpenModal(false)}>
+                       					<Icon name='remove' /> Não
+                       				</Button>
+                       				<Button color='green' inverted onClick={() => this.remover()}>
+                       					<Icon name='checkmark' /> Sim
+                       				</Button>
+                   			</Modal.Actions>
+               			</Modal>
+
 			</div>
 		)
-	}
+	
 }
 
-export default FormCliente;
