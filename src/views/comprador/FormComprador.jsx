@@ -1,43 +1,75 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InputMask from 'react-input-mask';
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
-class FormComprador extends React.Component{
+import {useLocation, Link} from "react-router-dom";
+import {ENDERECO_API} from "../ultil/Constantes";
 
-	state = {
-        nome:null,
-        enderecoComercial:null,
-        enderecoResidencial:null,
-        comissao:null,
-        trabahoHomeOffice:null,
-        qtdComprasMediasMes:null,
-        contratadoEm:null
-	}
-	salvar = () => {
+	export default function FormComprador () {
 
-		let compradorRequest = {
+		const [idComprador, setIdComprador] = useState();
+		const [nome, setNome] = useState();
+		const [enderecoComercial, setEnderecoComercial] = useState();
+		 const [enderecoResidencial, setEnderecoResidencial] = useState();
+		const [comissao, setComissao] = useState();
+		const [trabahoHomeOffice, setTrabahoHomeOffice] = useState();
+		const [qtdComprasMediasMes, setQtdComprasMediasMes] = useState();
+		const [contratadoEm, setContratadoEm] = useState();
+		const { state } = useLocation();
+		useEffect(() => {
+			if (state != null && state.id != null) {
 
-            nome: this.state.nome,
-            enderecoComercial: this.state.enderecoComercial,
-            enderecoResidencial: this.state.enderecoResidencial,
-            comissao: this.state.comissao,
-            trabahoHomeOffice: this.state.trabahoHomeOffice,
-            qtdComprasMediasMes: this.state.qtdComprasMediasMes,
-            contratadoEm: this.state.contratadoEm
+				axios.get(ENDERECO_API + "api/comprador/" + state.id)
+							 .then((response) => {
+							   setIdComprador(response.data.id)
+							   setNome(response.data.nome)
+							   setEnderecoComercial(response.data.enderecoComercial)
+							   setEnderecoResidencial(formatarData(response.data.enderecoResidencial))
+							   setComissao(response.data.comissao)
+							   setTrabahoHomeOffice(response.data.trabahoHomeOffice)
+							   setQtdComprasMediasMes(response.data.qtdComprasMediasMes)
+							   setContratadoEm(response.data.contratadoEm)
+
+				})
+			}
+		}, [state])
+		function salvar() {
+
+			let compradorRequest = {
+				nome: nome,
+				enderecoComercial: enderecoComercial,
+				enderecoResidencial: enderecoResidencial,
+				comissao: comissao,
+				trabahoHomeOffice: trabahoHomeOffice,
+				trabahoHomeOffice: trabahoHomeOffice,
+				
+			}
+	 
+			if (idComprador != null) { //Alteração:
+				axios.put(ENDERECO_API + "api/comprador/" + idComprador, compradorRequest)
+				.then((response) => { console.log('Comprador alterado com sucesso.') })
+				.catch((error) => { console.log('Erro ao alter um comprador.') })
+			} else { //Cadastro:
+				axios.post(ENDERECO_API + "api/comprador", compradorRequest)
+				.then((response) => { console.log('Comprador cadastrado com sucesso.') })
+				.catch((error) => { console.log('Erro ao incluir o comprador.') })
+			}
+	 }
+
+
+	 function formatarData  (dataParam)  {
+
+		if (dataParam === null || dataParam === '') {
+			return ''
 		}
+		let dia = dataParam.substr(8,2);
+		let mes = dataParam.substr(5,2);
+		let ano = dataParam.substr(0,4);
+		let dataFormatada = dia + '/' + mes + '/' + ano;
 	
-		axios.post("http://localhost:8080/api/comprador", compradorRequest)
-		.then((response) => {
-			console.log('Comprador cadastrado com sucesso.')
-		})
-		.catch((error) => {
-			console.log('Erro ao incluir o um comprador.')
-		})
+		return dataFormatada
 	}
-
-
-    render(){
         return(
             <div>
 
@@ -178,6 +210,5 @@ class FormComprador extends React.Component{
 			</div>
 		)
 	}
-}
 
-export default FormComprador;
+
