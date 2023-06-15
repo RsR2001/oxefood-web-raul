@@ -1,75 +1,81 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import InputMask from 'react-input-mask';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
-import {useLocation, Link} from "react-router-dom";
-import {ENDERECO_API} from "../ultil/Constantes";
+import { ENDERECO_API } from "../ultil/Constantes";
 
-	export default function FormComprador () {
+export default function FormComprador() {
 
-		const [idComprador, setIdComprador] = useState();
-		const [nome, setNome] = useState();
-		const [enderecoComercial, setEnderecoComercial] = useState();
-		 const [enderecoResidencial, setEnderecoResidencial] = useState();
-		const [comissao, setComissao] = useState();
-		const [trabahoHomeOffice, setTrabahoHomeOffice] = useState();
-		const [qtdComprasMediasMes, setQtdComprasMediasMes] = useState();
-		const [contratadoEm, setContratadoEm] = useState();
-		const { state } = useLocation();
-		useEffect(() => {
-			if (state != null && state.id != null) {
+	const { state } = useLocation();
 
-				axios.get(ENDERECO_API + "api/comprador/" + state.id)
-							 .then((response) => {
-							   setIdComprador(response.data.id)
-							   setNome(response.data.nome)
-							   setEnderecoComercial(response.data.enderecoComercial)
-							   setEnderecoResidencial(formatarData(response.data.enderecoResidencial))
-							   setComissao(response.data.comissao)
-							   setTrabahoHomeOffice(response.data.trabahoHomeOffice)
-							   setQtdComprasMediasMes(response.data.qtdComprasMediasMes)
-							   setContratadoEm(response.data.contratadoEm)
+	const [idComprador, setIdComprador] = useState();
+	const [nome, setNome] = useState();
+	const [enderecoComercial, setEnderecoComercial] = useState();
+	const [enderecoResidencial, setEnderecoResidencial] = useState();
+	const [comissao, setComissao] = useState();
+	const [trabahoHomeOffice, setTrabahoHomeOffice] = useState();
+	const [qtdComprasMediasMes, setQtdComprasMediasMes] = useState();
+	const [contratadoEm, setContratadoEm] = useState();
+	useEffect(() => {
 
+		if (state != null && state.id != null) {
+			
+			axios.get(ENDERECO_API + "api/comprador/" + state.id)
+			.then((response) => {
+				setIdComprador(response.data.id)
+				setNome(response.data.nome)
+				setEnderecoComercial(response.data.enderecoComercial)
+				setContratadoEm(formatarData(response.data.contradatoEm))
+				setEnderecoResidencial(response.data.enderecoResidencial)
+				setComissao(response.data.comissao)
+				setTrabahoHomeOffice(response.data.trabahoHomeOffice)
+				setQtdComprasMediasMes(response.data.qtdComprasMediasMes)
 				})
 			}
 		}, [state])
-		function salvar() {
-
-			let compradorRequest = {
-				nome: nome,
-				enderecoComercial: enderecoComercial,
-				enderecoResidencial: enderecoResidencial,
-				comissao: comissao,
-				trabahoHomeOffice: trabahoHomeOffice,
-				trabahoHomeOffice: trabahoHomeOffice,
-				
-			}
-	 
-			if (idComprador != null) { //Alteração:
-				axios.put(ENDERECO_API + "api/comprador/" + idComprador, compradorRequest)
-				.then((response) => { console.log('Comprador alterado com sucesso.') })
-				.catch((error) => { console.log('Erro ao alter um comprador.') })
-			} else { //Cadastro:
-				axios.post(ENDERECO_API + "api/comprador", compradorRequest)
-				.then((response) => { console.log('Comprador cadastrado com sucesso.') })
-				.catch((error) => { console.log('Erro ao incluir o comprador.') })
-			}
-	 }
-
-
-	 function formatarData  (dataParam)  {
-
-		if (dataParam === null || dataParam === '') {
-			return ''
-		}
-		let dia = dataParam.substr(8,2);
-		let mes = dataParam.substr(5,2);
-		let ano = dataParam.substr(0,4);
-		let dataFormatada = dia + '/' + mes + '/' + ano;
 	
-		return dataFormatada
+
+
+	function salvar() {
+
+		let compradorRequest = {
+
+			nome: nome,
+			enderecoComercial: enderecoComercial,
+			enderecoResidencial: enderecoResidencial,
+			comissao: comissao,
+			trabahoHomeOffice: trabahoHomeOffice,
+            qtdComprasMediasMes: qtdComprasMediasMes,
+            contratadoEm: contratadoEm
+		}
+		if (idComprador != null) { //Alteração:
+
+			axios.put(ENDERECO_API + "api/comprador/" + idComprador, compradorRequest)
+			.then((response) => { console.log('Comprador alterado com sucesso.') })
+			.catch((error) => { console.log('Erro ao alter um comprador.') })
+
+		} else { //Cadastro:
+
+			axios.post(ENDERECO_API + "api/comprador", compradorRequest)
+			.then((response) => { console.log('Comprador cadastrado com sucesso.') })
+			.catch((error) => { console.log('Erro ao incluir o comprador.') })
+		}
 	}
+	function formatarData  (dataParam)  {
+ 
+		if (dataParam == null || dataParam == '') {
+            return ''
+        }
+        
+        let dia = dataParam.substr(8,2);
+        let mes = dataParam.substr(5,2);
+        let ano = dataParam.substr(0,4);
+        let dataFormatada = dia + '/' + mes + '/' + ano;
+
+        return dataFormatada
+    }
+
         return(
             <div>
 
@@ -91,82 +97,81 @@ import {ENDERECO_API} from "../ultil/Constantes";
 										required
 										fluid
 										label='Nome'
-										maxLength="100"
-										value={this.state.nome}
-			onChange={e => this.setState({nome: e.target.value})}
-
+                                        width={16}
+										maxLength="50"
+										value={nome}
+										onChange={e => setNome(e.target.value)}
 									/>
-
-								</Form.Group>
-								
-								<Form.Group>
-
-                                <Form.Input
-
-										fluid
-										label='endereço Comercial'
-										width={6}
-										value={this.state.enderecoComercial}
-				onChange={e => this.setState({enderecoComercial: e.target.value})} 
-										>	
-									</Form.Input>
 
 									<Form.Input
 										fluid
-										label='endereço Residencial'
-                                        width={6}
-										value={this.state.enderecoResidencial}
-				onChange={e => this.setState({enderecoResidencial: e.target.value})}
-										>
-									</Form.Input>			
-
-								</Form.Group>
-<Form.Group>
-<Form.Input
-										fluid
-										label='comissão'
-                                        width={6}
-										value={this.state.comissao}
-				onChange={e => this.setState({comissao: e.target.value})}>
-										<InputMask 
-										mask="9999,99 BRL" /> 
-									</Form.Input>
-
+                                        width={8}
+										label='Valor de comissão'
+                                        value={comissao}
+										onChange={e => setComissao(e.target.value)}/> 
+                                        
                                     <Form.Input
-								required
-								label="trabalha HomeOffice?"
-								
-								>			
-									<fieldset value={this.state.trabahoHomeOffice}
-									onChange={e => this.setState({trabahoHomeOffice: e.target.value})}	>
-									<input type="radio" name = "sn" value={true} /><label>Sim</label>
-									<input type="radio" name = "sn" value={false} /><label>Não</label>
-									</fieldset>
-								</Form.Input>
-
-                                <Form.Input
 										fluid
-										label='qtdComprasMediasMes'
-                                        width={6}
-										value={this.state.qtdComprasMediasMes}
-				onChange={e => this.setState({qtdComprasMediasMes: e.target.value})}>
-									</Form.Input>
-                                    
+                                        width={8}
+										label='QTD Compras em Média no mês'
+                                        value={qtdComprasMediasMes}
+										onChange={e => setQtdComprasMediasMes(e.target.value)}/> 
+
                                     <Form.Input
                                         fluid
-                                        label='contratado Em...'
-                                        width={6}
-										value={this.state.contratadoEm}
-				onChange={e => this.setState({contratadoEm: e.target.value})}
+                                        label='Contratado Em'
+                                        width={8}
                                     >
                                         <InputMask 
                                             mask="99/99/9999" 
                                             maskChar={null}
                                             placeholder="Ex: 20/03/1985"
-                                        /> 
+											value={contratadoEm}
+											onChange={e => setContratadoEm(e.target.value)}>
+											</InputMask>
                                     </Form.Input>
+									
 
-</Form.Group>
+								</Form.Group>
+								
+								<Form.Group>
+
+									<Form.Input
+										fluid
+										label='Endereço Residencial'
+                                        width={16}
+										value={enderecoResidencial}
+										onChange={e => setEnderecoComercial(e.target.value)}/>
+								</Form.Group>
+
+                                <Form.Group>
+									
+										<Form.Input
+										fluid
+										label='Endereço Comercial'
+                                        width={16}
+										value={enderecoComercial}
+										onChange={e => setEnderecoComercial( e.target.value)}/>
+									
+
+								</Form.Group>
+
+                                <Form.Group inline>
+
+								
+								<Form.Input
+									required
+									label="Trabalha em Home Office:"
+								
+								>			
+									<fieldset value={trabahoHomeOffice}
+									onChange={e => setTrabahoHomeOffice(e.target.value)}	>
+									<input type="radio" name = "sn" value={true} /><label>Sim</label>
+									<input type="radio" name = "sn" value={false} /><label>Não</label>
+									</fieldset>
+								</Form.Input>	
+
+								</Form.Group>
 
 								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
 
@@ -177,10 +182,11 @@ import {ENDERECO_API} from "../ultil/Constantes";
 										icon
 										labelPosition='left'
 										color='orange'
-										onClick={this.listar}
+										
 										>
 										<Icon name='reply' />
 										<Link to={'/list-comprador'}>Voltar</Link>
+
 									</Button>
 
 									<Container textAlign='right'>
@@ -192,7 +198,7 @@ import {ENDERECO_API} from "../ultil/Constantes";
 											labelPosition='left'
 											color='blue'
 											floated='right'
-											onClick={this.salvar}
+											onClick={() => salvar()}
 											
 										>
 											<Icon name='save' />
@@ -210,5 +216,3 @@ import {ENDERECO_API} from "../ultil/Constantes";
 			</div>
 		)
 	}
-
-

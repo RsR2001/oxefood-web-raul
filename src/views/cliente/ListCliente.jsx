@@ -2,114 +2,110 @@ import axios from 'axios';
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
-import { ENDERECO_API } from "../ultil/Constantes";
+import { ENDERECO_API } from '../ultil/Constantes';
 
 class ListCliente extends React.Component{
 
-   state = {
-
+    state = {
+ 
+        listaClientes: [],
         openModal: false,
-        idRemover: null,    
-       listaClientes: []
-      
-   }
-
-   componentDidMount = () => {
-      
-       this.carregarLista();
-      
-   }
-   carregarLista = () => {
-
-    axios.get("http://localhost:8080/api/cliente")
-    .then((response) => {
+        idRemover: null
+        
+    }
+   
+    componentDidMount = () => {
        
-        this.setState({
-            listaClientes: response.data
-        })
-    })
-
-};
-
-formatarData = (dataParam) => {
-
-    if (dataParam === null || dataParam === '') {
-        return ''
+        this.carregarLista();
+       
     }
-    
-    let dia = dataParam.substr(8,2);
-    let mes = dataParam.substr(5,2);
-    let ano = dataParam.substr(0,4);
-    let dataFormatada = dia + '/' + mes + '/' + ano;
+    carregarLista = () => {
 
-    return dataFormatada
-};
-
-confirmaRemover = (id) => {
-
-    this.setState({
-        openModal: true,
-        idRemover: id
-         })  
-    }
-
-setOpenModal = (val) => {
-
-        this.setState({
-            openModal: val
-        })
-   
-    };
-    remover = async () => {
-
-        await axios.delete(ENDERECO_API + 'api/cliente/' + this.state.idRemover)
+        axios.get(ENDERECO_API + "api/cliente")
         .then((response) => {
-   
-            this.setState({ openModal: false })
-            console.log('Cliente removido com sucesso.')
-   
-            axios.get(ENDERECO_API + "api/cliente")
-            .then((response) => {
            
-                this.setState({
-                    listaClientes: response.data
-                })
+            this.setState({
+                listaClientes: response.data
             })
         })
-        .catch((error) => {
-            this.setState({  openModal: false })
-            console.log('Erro ao remover um cliente.')
-        })
- };
  
-    
+    };
+ 
+    formatarData = (dataParam) => {
+ 
+        let data = new Date(dataParam);
+        let dia = data.getDate() < 10 ? "0" + data.getDate() : data.getDate();
+        let mes = (data.getMonth() + 1) < 10 ? "0" + (data.getMonth() + 1) : (data.getMonth() + 1);
+        let dataFormatada = dia + "/" + mes + "/" + data.getFullYear();
+       
+        return dataFormatada
+    };
 
-render(){
-    return(
-        <div>
+    confirmaRemover = (id) => {
 
-            <div style={{marginTop: '3%'}}>
+        this.setState({
+            openModal: true,
+            idRemover: id
+             })  
+        }
+        
+        remover = async () => {
 
-                <Container textAlign='justified' >
+            await axios.delete(ENDERECO_API + 'api/cliente/' + this.state.idRemover)
+            .then((response) => {
+       
+                this.setState({ openModal: false })
+                console.log('Cliente removido com sucesso.')
+       
+                axios.get(ENDERECO_API + "api/cliente")
+                .then((response) => {
+               
+                    this.setState({
+                        listaClientes: response.data
+                    })
+                })
+            })
+            .catch((error) => {
+                this.setState({  openModal: false })
+                console.log('Erro ao remover um cliente.')
+            })
+     };
+     
 
-                    <h2> Cliente </h2>
+        setOpenModal = (val) => {
 
-                    <Divider />
-
-                    <div style={{marginTop: '4%'}}>
-
-                        <Button
-                            inverted
-                            circular
-                            icon
-                            labelPosition='left'
-                            color='orange'
-                            floated='right'
-                        >
-                            <Icon name='clipboard outline' />
-                            <Link to={'/form-cliente'}>Novo</Link>
-                        </Button>
-                        <br/><br/><br/>
+            this.setState({
+                openModal: val
+            })
+       
+        };
+     
+    render(){
+        return(
+            <div>
+ 
+                <div style={{marginTop: '3%'}}>
+ 
+                    <Container textAlign='justified' >
+ 
+                        <h2> Cliente </h2>
+ 
+                        <Divider />
+ 
+                        <div style={{marginTop: '4%'}}>
+ 
+                            <Button
+                                inverted
+                                circular
+                                icon
+                                labelPosition='left'
+                                color='orange'
+                                floated='right'
+                            >
+                                <Icon name='clipboard outline' />
+                                <Link to={'/form-cliente'}>Novo</Link>
+                            </Button>
+                            <br/><br/><br/>
                       
                       <Table color='orange' sortable celled>
 
@@ -142,17 +138,18 @@ render(){
                                         color='green'
                                         title='Clique aqui para editar os dados deste cliente'
                                         icon>
-                                        <Link to="/form-cliente" state={{id: cliente.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
-                                        </Button>
-
-                                        <Button
+                                            <Link to="/form-cliente" state={{id: cliente.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+                                    </Button> &nbsp;
+                                
+                                                    <Button
                                                    inverted
                                                    circular
                                                    icon='trash'
                                                    color='red'
                                                    title='Clique aqui para remover este cliente' 
-                                                   onClick={e => this.confirmaRemover(cliente.id)}/>
-
+                                                    onClick={e => this.confirmaRemover(cliente.id)}>
+                                                        <Icon name='trash' />
+                                                    </Button>
                                            </Table.Cell>
                                        </Table.Row>
                                    ))}
@@ -161,7 +158,7 @@ render(){
                            </Table>
                        </div>
                    </Container>
-               </div>
+                 </div>
                <Modal
                    			basic
                    			onClose={() => this.setOpenModal(false)}
