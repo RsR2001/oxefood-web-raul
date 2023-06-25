@@ -1,20 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu } from "semantic-ui-react";
+import { Dropdown, Menu } from "semantic-ui-react";
 
 class MenuSistema extends React.Component{
 
     state = {
         activeItem: 'home'
     }
- 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
- 
+
+   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
     render(){
         return(
             <>
                 <Menu inverted>
-                   
+                  
                     <Menu.Item
                         name='home'
                         active={this.state.activeItem === 'home'}
@@ -22,6 +22,7 @@ class MenuSistema extends React.Component{
                         as={Link}
                         to='/'
                     />
+                   
                     <Menu.Item
                         name='cliente'
                         active={this.state.activeItem === 'cliente'}
@@ -29,15 +30,30 @@ class MenuSistema extends React.Component{
                         as={Link}
                         to='/list-cliente'
                     />
- 
-                    <Menu.Item
-                        name='produto'
-                        active={this.state.activeItem === 'produto'}
-                        onClick={this.handleItemClick}
-                        as={Link}
-                        to='/list-produto'
-                    />
- 
+
+                    <Menu.Menu className='navbar__item--pc'>
+                        <Dropdown item text='Produto'>
+                            <Dropdown.Menu>
+                                <Dropdown.Item 
+                                    name='categoria'
+                                    active={this.state.activeItem === 'categoria'}
+                                    onClick={this.handleItemClick}
+                                    text='Categoria de Produto' 
+                                    as={Link} 
+                                    to='/list-categoria-produto'
+                                />
+                                <Dropdown.Item
+                                    name='produto'
+                                    active={this.state.activeItem === 'produto'}
+                                    onClick={this.handleItemClick}
+                                    text='Produto' 
+                                    as={Link} 
+                                    to='/list-produto'
+                                />
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </Menu.Menu>
+
                     <Menu.Item
                         name='entregador'
                         active={this.state.activeItem === 'entregador'}
@@ -45,18 +61,27 @@ class MenuSistema extends React.Component{
                         as={Link}
                         to='/list-entregador'
                     />
-                     <Menu.Item
+
+                    <Menu.Item
                         name='comprador'
                         active={this.state.activeItem === 'comprador'}
                         onClick={this.handleItemClick}
                         as={Link}
-                        to='/list-comprador'
+                        to='/form-comprador'
                     />
- 
+
+                    <Menu.Item
+                        name='Cupom Desconto'
+                        active={this.state.activeItem === 'Cupom Desconto'}
+                        onClick={this.handleItemClick}
+                        as={Link}
+                        to='/form-cupom-desconto'
+                    />
+
                 </Menu>
             </>
         )
     }
- }
- 
- export default MenuSistema;
+}
+
+export default MenuSistema;

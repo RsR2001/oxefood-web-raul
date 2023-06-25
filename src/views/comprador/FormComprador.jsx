@@ -20,21 +20,21 @@ export default function FormComprador() {
 	useEffect(() => {
 
 		if (state != null && state.id != null) {
-			
+
 			axios.get(ENDERECO_API + "api/comprador/" + state.id)
-			.then((response) => {
-				setIdComprador(response.data.id)
-				setNome(response.data.nome)
-				setEnderecoComercial(response.data.enderecoComercial)
-				setContratadoEm(formatarData(response.data.contradatoEm))
-				setEnderecoResidencial(response.data.enderecoResidencial)
-				setComissao(response.data.comissao)
-				setTrabahoHomeOffice(response.data.trabahoHomeOffice)
-				setQtdComprasMediasMes(response.data.qtdComprasMediasMes)
+				.then((response) => {
+					setIdComprador(response.data.id)
+					setNome(response.data.nome)
+					setEnderecoComercial(response.data.enderecoComercial)
+					setContratadoEm(formatarData(response.data.contradatoEm))
+					setEnderecoResidencial(response.data.enderecoResidencial)
+					setComissao(response.data.comissao)
+					setTrabahoHomeOffice(response.data.trabahoHomeOffice)
+					setQtdComprasMediasMes(response.data.qtdComprasMediasMes)
 				})
-			}
-		}, [state])
-	
+		}
+	}, [state])
+
 
 
 	function salvar() {
@@ -46,173 +46,173 @@ export default function FormComprador() {
 			enderecoResidencial: enderecoResidencial,
 			comissao: comissao,
 			trabahoHomeOffice: trabahoHomeOffice,
-            qtdComprasMediasMes: qtdComprasMediasMes,
-            contratadoEm: contratadoEm
+			qtdComprasMediasMes: qtdComprasMediasMes,
+			contratadoEm: contratadoEm
 		}
 		if (idComprador != null) { //Alteração:
 
 			axios.put(ENDERECO_API + "api/comprador/" + idComprador, compradorRequest)
-			.then((response) => { console.log('Comprador alterado com sucesso.') })
-			.catch((error) => { console.log('Erro ao alter um comprador.') })
+				.then((response) => { console.log('Comprador alterado com sucesso.') })
+				.catch((error) => { console.log('Erro ao alter um comprador.') })
 
 		} else { //Cadastro:
 
 			axios.post(ENDERECO_API + "api/comprador", compradorRequest)
-			.then((response) => { console.log('Comprador cadastrado com sucesso.') })
-			.catch((error) => { console.log('Erro ao incluir o comprador.') })
+				.then((response) => { console.log('Comprador cadastrado com sucesso.') })
+				.catch((error) => { console.log('Erro ao incluir o comprador.') })
 		}
 	}
-	function formatarData  (dataParam)  {
- 
+	function formatarData(dataParam) {
+
 		if (dataParam == null || dataParam == '') {
-            return ''
-        }
-        
-        let dia = dataParam.substr(8,2);
-        let mes = dataParam.substr(5,2);
-        let ano = dataParam.substr(0,4);
-        let dataFormatada = dia + '/' + mes + '/' + ano;
+			return ''
+		}
 
-        return dataFormatada
-    }
+		let dia = dataParam.substr(8, 2);
+		let mes = dataParam.substr(5, 2);
+		let ano = dataParam.substr(0, 4);
+		let dataFormatada = dia + '/' + mes + '/' + ano;
 
-        return(
-            <div>
+		return dataFormatada
+	}
 
-                <div style={{marginTop: '3%'}}>
+	return (
+		<div>
 
-                    <Container textAlign='justified' >
+			<div style={{ marginTop: '3%' }}>
 
-                        <h2> <span style={{color: 'darkgray'}}> Comprador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+				<Container textAlign='justified' >
 
-                        <Divider />
+					<h2> <span style={{ color: 'darkgray' }}> Comprador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
 
-						<div style={{marginTop: '4%'}}>
+					<Divider />
 
-							<Form>
+					<div style={{ marginTop: '4%' }}>
 
-								<Form.Group widths='equal'>
+						<Form>
 
-									<Form.Input
-										required
-										fluid
-										label='Nome'
-                                        width={16}
-										maxLength="50"
-										value={nome}
-										onChange={e => setNome(e.target.value)}
-									/>
+							<Form.Group widths='equal'>
 
-									<Form.Input
-										fluid
-                                        width={8}
-										label='Valor de comissão'
-                                        value={comissao}
-										onChange={e => setComissao(e.target.value)}/> 
-                                        
-                                    <Form.Input
-										fluid
-                                        width={8}
-										label='QTD Compras em Média no mês'
-                                        value={qtdComprasMediasMes}
-										onChange={e => setQtdComprasMediasMes(e.target.value)}/> 
+								<Form.Input
+									required
+									fluid
+									label='Nome'
+									width={16}
+									maxLength="50"
+									value={nome}
+									onChange={e => setNome(e.target.value)}
+								/>
 
-                                    <Form.Input
-                                        fluid
-                                        label='Contratado Em'
-                                        width={8}
-                                    >
-                                        <InputMask 
-                                            mask="99/99/9999" 
-                                            maskChar={null}
-                                            placeholder="Ex: 20/03/1985"
-											value={contratadoEm}
-											onChange={e => setContratadoEm(e.target.value)}>
-											</InputMask>
-                                    </Form.Input>
-									
+								<Form.Input
+									fluid
+									width={8}
+									label='Valor de comissão'
+									value={comissao}
+									onChange={e => setComissao(e.target.value)} />
 
-								</Form.Group>
-								
-								<Form.Group>
+								<Form.Input
+									fluid
+									width={8}
+									label='QTD Compras em Média no mês'
+									value={qtdComprasMediasMes}
+									onChange={e => setQtdComprasMediasMes(e.target.value)} />
 
-									<Form.Input
-										fluid
-										label='Endereço Residencial'
-                                        width={16}
-										value={enderecoResidencial}
-										onChange={e => setEnderecoComercial(e.target.value)}/>
-								</Form.Group>
+								<Form.Input
+									fluid
+									label='Contratado Em'
+									width={8}
+								>
+									<InputMask
+										mask="99/99/9999"
+										maskChar={null}
+										placeholder="Ex: 20/03/1985"
+										value={contratadoEm}
+										onChange={e => setContratadoEm(e.target.value)}>
+									</InputMask>
+								</Form.Input>
 
-                                <Form.Group>
-									
-										<Form.Input
-										fluid
-										label='Endereço Comercial'
-                                        width={16}
-										value={enderecoComercial}
-										onChange={e => setEnderecoComercial( e.target.value)}/>
-									
 
-								</Form.Group>
+							</Form.Group>
 
-                                <Form.Group inline>
+							<Form.Group>
 
-								
+								<Form.Input
+									fluid
+									label='Endereço Residencial'
+									width={16}
+									value={enderecoResidencial}
+									onChange={e => setEnderecoComercial(e.target.value)} />
+							</Form.Group>
+
+							<Form.Group>
+
+								<Form.Input
+									fluid
+									label='Endereço Comercial'
+									width={16}
+									value={enderecoComercial}
+									onChange={e => setEnderecoComercial(e.target.value)} />
+
+
+							</Form.Group>
+
+							<Form.Group inline>
+
+
 								<Form.Input
 									required
 									label="Trabalha em Home Office:"
-								
-								>			
+
+								>
 									<fieldset value={trabahoHomeOffice}
-									onChange={e => setTrabahoHomeOffice(e.target.value)}	>
-									<input type="radio" name = "sn" value={true} /><label>Sim</label>
-									<input type="radio" name = "sn" value={false} /><label>Não</label>
+										onChange={e => setTrabahoHomeOffice(e.target.value)}	>
+										<input type="radio" name="sn" value={true} /><label>Sim</label>
+										<input type="radio" name="sn" value={false} /><label>Não</label>
 									</fieldset>
-								</Form.Input>	
+								</Form.Input>
 
-								</Form.Group>
+							</Form.Group>
 
-								<Form.Group widths='equal' style={{marginTop: '4%'}}  className='form--empresa-salvar'>
+							<Form.Group widths='equal' style={{ marginTop: '4%' }} className='form--empresa-salvar'>
+
+								<Button
+									type="button"
+									inverted
+									circular
+									icon
+									labelPosition='left'
+									color='orange'
+
+								>
+									<Icon name='reply' />
+									<Link to={'/list-comprador'}>Voltar</Link>
+
+								</Button>
+
+								<Container textAlign='right'>
 
 									<Button
-										type="button"
 										inverted
 										circular
 										icon
 										labelPosition='left'
-										color='orange'
-										
-										>
-										<Icon name='reply' />
-										<Link to={'/list-comprador'}>Voltar</Link>
+										color='blue'
+										floated='right'
+										onClick={() => salvar()}
 
+									>
+										<Icon name='save' />
+										Salvar
 									</Button>
 
-									<Container textAlign='right'>
-										
-										<Button
-											inverted
-											circular
-											icon
-											labelPosition='left'
-											color='blue'
-											floated='right'
-											onClick={() => salvar()}
-											
-										>
-											<Icon name='save' />
-											Salvar
-										</Button>
-										
-									</Container>
+								</Container>
 
-								</Form.Group>
+							</Form.Group>
 
-							</Form>
-						</div>
-                    </Container>
-                </div>
+						</Form>
+					</div>
+				</Container>
 			</div>
-		)
-	}
+		</div>
+	)
+}
