@@ -33,10 +33,7 @@ class ListComprador extends React.Component{
  
     formatarData = (dataParam) => {
  
-        let data = new Date(dataParam);
-        let dia = data.getDate() < 10 ? "0" + data.getDate() : data.getDate();
-        let mes = (data.getMonth() + 1) < 10 ? "0" + (data.getMonth() + 1) : (data.getMonth() + 1);
-        let dataFormatada = dia + "/" + mes + "/" + data.getFullYear();
+        let dataFormatada = dataParam
        
         return dataFormatada
     };

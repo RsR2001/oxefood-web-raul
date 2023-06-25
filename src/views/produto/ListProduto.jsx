@@ -8,7 +8,7 @@ class ListProduto extends React.Component{
 
    state = {
 
-       listaProduto: [],
+       listaProdutos: [],
        openModal: false,
        idRemover: null
    }
@@ -110,7 +110,7 @@ render(){
                      
                           <Table.Body>
 
-                              { this.state.listaProduto.map(produto => (
+                              { this.state.listaProdutos.map(produto => (
 
                                   <Table.Row>
                                       <Table.Cell>{produto.titulo}</Table.Cell>

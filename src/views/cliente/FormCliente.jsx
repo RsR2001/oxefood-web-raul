@@ -18,21 +18,22 @@ export default function FormCliente () {
 	const [foneCelular, setFoneCelular] = useState();
 	const [foneFixo, setFoneFixo] = useState();
 
-		useEffect(() => {
+	useEffect(() => {
 
-				if (state != null && state.id != null) {
-					
-					axios.get(ENDERECO_API + "api/cliente/" + state.id)
-					.then((response) => {
-						setIdCliente(response.data.id)
-						setNome(response.data.nome)
-						setCpf(response.data.cpf)
-						setDataNascimento(formatarData(response.data.dataNascimento))
-						setFoneCelular(response.data.foneCelular)
-						setFoneFixo(response.data.foneFixo)
-					})
-				}
-		}, [state])
+		if (state != null && state.id != null) {
+			
+			axios.get(ENDERECO_API + "api/cliente/" + state.id)
+			.then((response) => {
+				setIdCliente(response.data.id)
+				setNome(response.data.nome)
+				setCpf(response.data.cpf)
+				setDataNascimento(formatarData(response.data.dataNascimento))
+				setFoneCelular(response.data.foneCelular)
+				setFoneFixo(response.data.foneFixo)
+			})
+		}
+		
+	}, [state])
 
 
 	function salvar()  {
@@ -59,9 +60,9 @@ export default function FormCliente () {
 			.catch((error) => { console.log('Erro ao incluir o cliente.') })
 		}
 	}
-	function formatarData  (dataParam)  {
- 
-		if (dataParam == null || dataParam == '') {
+	function formatarData(dataParam) {
+
+        if (dataParam == null || dataParam == '') {
             return ''
         }
         
@@ -72,7 +73,7 @@ export default function FormCliente () {
 
         return dataFormatada
     }
-    
+	
         return(
             <div>
 

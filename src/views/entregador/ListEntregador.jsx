@@ -32,17 +32,6 @@ class ListEntregador extends React.Component{
 
     formatarData = (dataParam) => {
 
-        /*
-        if (dataParam == null || dataParam == '') {
-            return ''
-        }
-        
-        let dia = dataParam.substr(8,2);
-        let mes = dataParam.substr(5,2);
-        let ano = dataParam.substr(0,4);
-        let dataFormatada = dia + '/' + mes + '/' + ano;
-        */
-
        let dataFormatada = dataParam
 
         return dataFormatada

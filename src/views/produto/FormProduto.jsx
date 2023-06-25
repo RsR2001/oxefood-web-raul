@@ -50,14 +50,14 @@ export default function FormProduto() {
 		if (idProduto != null) { //Alteração:
 
 			axios.put(ENDERECO_API + "api/produto/" + idProduto, produtoRequest)
-			.then((response) => { console.log('Entregador alterado com sucesso.') })
-			.catch((error) => { console.log('Erro ao alter um Entregador.') })
+			.then((response) => { console.log('Produto alterado com sucesso.') })
+			.catch((error) => { console.log('Erro ao alter um Produto.') })
 
 		} else { //Cadastro:
 
 			axios.post(ENDERECO_API + "api/produto", produtoRequest)
-			.then((response) => { console.log('Entregador cadastrado com sucesso.') })
-			.catch((error) => { console.log('Erro ao incluir o Entregador.') })
+			.then((response) => { console.log('Produto cadastrado com sucesso.') })
+			.catch((error) => { console.log('Erro ao incluir o Produto.') })
 		}
 	}
 	
