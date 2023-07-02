@@ -18,7 +18,7 @@ export default function ListCategoriaProduto () {
 
     function carregarLista () {
 
-        axios.get(ENDERECO_API + "api/categoriaproduto")
+        axios.get(ENDERECO_API + "api/categoriaproduto/")
         .then((response) => {
             setLista(response.data)
         })
@@ -39,7 +39,7 @@ export default function ListCategoriaProduto () {
             setOpenModal(false)
             console.log('Categoria de produto removida com sucesso.')
     
-            axios.get(ENDERECO_API + "api/categoriaproduto")
+            axios.get(ENDERECO_API + "api/categoriaproduto/")
             .then((response) => {
                 setLista(response.data)
             })

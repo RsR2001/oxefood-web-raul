@@ -23,13 +23,28 @@ class MenuSistema extends React.Component{
                         to='/'
                     />
                    
-                    <Menu.Item
-                        name='cliente'
-                        active={this.state.activeItem === 'cliente'}
-                        onClick={this.handleItemClick}
-                        as={Link}
-                        to='/list-cliente'
-                    />
+                   <Menu.Menu className='navbar__item--pc'>
+                        <Dropdown item text='Cliente'>
+                            <Dropdown.Menu>
+                                <Dropdown.Item 
+                                    name='Endereço'
+                                    active={this.state.activeItem === 'endereco'}
+                                    onClick={this.handleItemClick}
+                                    text='Endereço do Cliente' 
+                                    as={Link} 
+                                    to='/list-endereco-cliente'
+                                />
+                                <Dropdown.Item
+                                    name='cliente'
+                                    active={this.state.activeItem === 'cliente'}
+                                    onClick={this.handleItemClick}
+                                    text='Cliente' 
+                                    as={Link} 
+                                    to='/list-cliente'
+                                />
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </Menu.Menu>
 
                     <Menu.Menu className='navbar__item--pc'>
                         <Dropdown item text='Produto'>
@@ -69,15 +84,7 @@ class MenuSistema extends React.Component{
                         as={Link}
                         to='/form-comprador'
                     />
-
-                    <Menu.Item
-                        name='Cupom Desconto'
-                        active={this.state.activeItem === 'Cupom Desconto'}
-                        onClick={this.handleItemClick}
-                        as={Link}
-                        to='/form-cupom-desconto'
-                    />
-
+                   
                 </Menu>
             </>
         )

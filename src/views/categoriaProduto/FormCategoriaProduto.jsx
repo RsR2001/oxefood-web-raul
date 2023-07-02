@@ -40,7 +40,7 @@ export default function FormCategoriaProduto() {
 
         } else { //Cadastro:
 
-            axios.post(ENDERECO_API + "api/categoriaproduto", categoriaRequest)
+            axios.post(ENDERECO_API + "api/categoriaproduto/", categoriaRequest)
                 .then((response) => { console.log('Categoria de produto cadastrado com sucesso.') })
                 .catch((error) => { console.log('Erro ao incluir a categoria de produto.') })
 
