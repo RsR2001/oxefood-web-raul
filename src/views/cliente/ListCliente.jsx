@@ -113,9 +113,15 @@ class ListCliente extends React.Component {
                                         <Table.HeaderCell>Nome</Table.HeaderCell>
                                         <Table.HeaderCell>CPF</Table.HeaderCell>
                                         <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
-                                        <Table.HeaderCell>Endereço</Table.HeaderCell>
                                         <Table.HeaderCell>Fone Celular</Table.HeaderCell>
                                         <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
+                                        <Table.HeaderCell>Rua</Table.HeaderCell>
+                                        <Table.HeaderCell>Número</Table.HeaderCell>
+                                        <Table.HeaderCell>Bairro</Table.HeaderCell>
+                                        <Table.HeaderCell>CEP</Table.HeaderCell>
+                                        <Table.HeaderCell>Cidade</Table.HeaderCell>
+                                        <Table.HeaderCell>Estado</Table.HeaderCell>
+                                        <Table.HeaderCell>Complemento</Table.HeaderCell>   
                                         <Table.HeaderCell textAlign='center' width={2}>Ações</Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Header>
@@ -128,9 +134,15 @@ class ListCliente extends React.Component {
                                             <Table.Cell>{cliente.nome}</Table.Cell>
                                             <Table.Cell>{cliente.cpf}</Table.Cell>
                                             <Table.Cell>{this.formatarData(cliente.dataNascimento)}</Table.Cell>
-                                            <Table.Cell>{cliente.endereco.rua}</Table.Cell>
                                             <Table.Cell>{cliente.foneCelular}</Table.Cell>
                                             <Table.Cell>{cliente.foneFixo}</Table.Cell>
+                                            <Table.Cell>{cliente.endereco.rua}</Table.Cell>
+                                            <Table.Cell>{cliente.endereco.numero}</Table.Cell>
+                                            <Table.Cell>{cliente.endereco.bairro}</Table.Cell>
+                                            <Table.Cell>{cliente.endereco.cep}</Table.Cell>
+                                            <Table.Cell>{cliente.endereco.cidade}</Table.Cell>
+                                            <Table.Cell>{cliente.endereco.estado}</Table.Cell>
+                                            <Table.Cell>{cliente.endereco.complemento}</Table.Cell>
                                             <Table.Cell textAlign='center'>
 
                                                 <Button

@@ -55,7 +55,7 @@ export default function FormEnderecoCliente() {
 
             axios.put(ENDERECO_API + "api/enderecocliente/" + idEndereco, enderecoRequest)
                 .then((response) => { console.log('Endereço do cliente alterado com sucesso.') })
-                .catch((error) => { console.log('Erro ao alter uma aategoria de produto.') })
+                .catch((error) => { console.log('Erro ao alterar o endereço do cliente.') })
 
         } else { //Cadastro:
 

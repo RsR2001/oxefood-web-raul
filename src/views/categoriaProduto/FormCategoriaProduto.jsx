@@ -36,7 +36,7 @@ export default function FormCategoriaProduto() {
 
             axios.put(ENDERECO_API + "api/categoriaproduto/" + idCategoria, categoriaRequest)
                 .then((response) => { console.log('Categoria de produto alterado com sucesso.') })
-                .catch((error) => { console.log('Erro ao alter uma aategoria de produto.') })
+                .catch((error) => { console.log('Erro ao alterar uma categoria de produto.') })
 
         } else { //Cadastro:
 

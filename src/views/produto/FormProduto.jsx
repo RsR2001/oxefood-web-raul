@@ -56,6 +56,7 @@ export default function FormProduto() {
 			valorUnitario: valorUnitario,
 			tempoEntregaMinimo: tempoEntregaMinimo,
 			tempoEntregaMaximo: tempoEntregaMaximo
+			
 		}
 
 		if (idProduto != null) { //Alteração:
