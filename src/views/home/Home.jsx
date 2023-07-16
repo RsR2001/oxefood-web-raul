@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Grid, Image } from 'semantic-ui-react';
+import MenuSistema from '../../MenuSistema';
 
 class Home extends React.Component {
 
@@ -7,6 +8,7 @@ class Home extends React.Component {
         return (
             <div>
                 <div style={{ marginTop: '5%' }}>
+                <MenuSistema />  
                     <Container>
                         <Grid columns={2} divided>
                             <Grid.Row>

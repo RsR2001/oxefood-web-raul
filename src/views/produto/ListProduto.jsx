@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon, Menu, Segment, Table } from 'semantic-ui-react';
+import MenuSistema from '../../MenuSistema';
 import { ENDERECO_API } from '../ultil/Constantes';
 
 class ListProduto extends React.Component {
@@ -96,7 +97,7 @@ class ListProduto extends React.Component {
             <div>
 
                 <div style={{ marginTop: '3%' }}>
-
+                <MenuSistema />  
                     <Container textAlign='justified' >
 
                         <h2> Produto </h2>

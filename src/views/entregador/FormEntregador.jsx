@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import InputMask from 'react-input-mask';
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+import MenuSistema from '../../MenuSistema';
 import { ENDERECO_API } from "../ultil/Constantes";
 
 
@@ -108,7 +109,7 @@ export default function FormEntregador() {
 		<div>
 
 			<div style={{ marginTop: '3%' }}>
-
+			<MenuSistema />
 				<Container textAlign='justified' >
 
 					<h2> <span style={{ color: 'darkgray' }}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>

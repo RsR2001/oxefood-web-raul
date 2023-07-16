@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Menu } from "semantic-ui-react";
+import { logout } from './views/ultil/AuthenticationService';
 
 class MenuSistema extends React.Component{
 
@@ -9,6 +10,11 @@ class MenuSistema extends React.Component{
     }
 
    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+   logout = () => {
+        logout()
+    }
+
 
     render(){
         return(
@@ -20,31 +26,16 @@ class MenuSistema extends React.Component{
                         active={this.state.activeItem === 'home'}
                         onClick={this.handleItemClick}
                         as={Link}
-                        to='/'
+                        to='/home'
                     />
                    
-                   <Menu.Menu className='navbar__item--pc'>
-                        <Dropdown item text='Cliente'>
-                            <Dropdown.Menu>
-                                <Dropdown.Item 
-                                    name='Endereço'
-                                    active={this.state.activeItem === 'endereco'}
-                                    onClick={this.handleItemClick}
-                                    text='Endereço do Cliente' 
-                                    as={Link} 
-                                    to='/list-endereco-cliente'
-                                />
-                                <Dropdown.Item
-                                    name='cliente'
-                                    active={this.state.activeItem === 'cliente'}
-                                    onClick={this.handleItemClick}
-                                    text='Cliente' 
-                                    as={Link} 
-                                    to='/list-cliente'
-                                />
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Menu.Menu>
+                    <Menu.Item
+                        name='cliente'
+                        active={this.state.activeItem === 'cliente'}
+                        onClick={this.handleItemClick}
+                        as={Link}
+                        to='/list-cliente'
+                    />
 
                     <Menu.Menu className='navbar__item--pc'>
                         <Dropdown item text='Produto'>
@@ -84,7 +75,24 @@ class MenuSistema extends React.Component{
                         as={Link}
                         to='/form-comprador'
                     />
-                   
+
+                    <Menu.Item
+                        name='Cupom Desconto'
+                        active={this.state.activeItem === 'Cupom Desconto'}
+                        onClick={this.handleItemClick}
+                        as={Link}
+                        to='/form-cupom-desconto'
+                    />
+
+                    <Menu.Item
+                        className='navbar__item--mobile'
+                        onClick={this.logout}
+                        content='Sair'
+                        as={Link}
+                        to='/'
+                    />
+
+
                 </Menu>
             </>
         )
