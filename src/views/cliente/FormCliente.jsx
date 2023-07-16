@@ -17,8 +17,7 @@ export default function FormCliente() {
 	const [dataNascimento, setDataNascimento] = useState();
 	const [foneCelular, setFoneCelular] = useState();
 	const [foneFixo, setFoneFixo] = useState();
-	const [idUsuario, setIdUsuario] = useState();
-	const [username, setUsername] = useState();
+	const [email, setEmail] = useState();
 	const [password, setPassword] = useState();
 
 	useEffect(() => {
@@ -33,15 +32,12 @@ export default function FormCliente() {
 					setDataNascimento(formatarData(response.data.dataNascimento))
 					setFoneCelular(response.data.foneCelular)
 					setFoneFixo(response.data.foneFixo)
+					setEmail(response.data.email)
+				    setPassword(response.data.password)
 				})
 		}
 
-		axios.get(ENDERECO_API + "api/usuario/")
-			.then((response) => {
-				setIdUsuario(response.data.id)
-				setUsername(response.data.username)
-				setPassword(response.data.password)
-			})
+		
 	}, [state])
 
 	function salvar() {
@@ -53,15 +49,14 @@ export default function FormCliente() {
 			dataNascimento: dataNascimento,
 			foneCelular: foneCelular,
 			foneFixo: foneFixo,
-			idUsuario: idUsuario,
-			username: username,
+			email: email,
 			password: password
 
 		}
 
 		if (idCliente != null) { //Alteração:
 
-			axios.put(ENDERECO_API + "api/cliente/" + idCliente, "api/usuario/" + idUsuario, clienteRequest)
+			axios.put(ENDERECO_API + "api/cliente/" + idCliente, clienteRequest)
 				.then((response) => { console.log('Cliente alterado com sucesso.') })
 				.catch((error) => { console.log('Erro ao alter um cliente.') })
 
@@ -183,8 +178,8 @@ export default function FormCliente() {
 									label='email'
 									width={6}
 									placeholder="Ex: ALGUMEMAIL@GMAIL.COM"
-									value={username}
-									onChange={e => setUsername(e.target.value)}
+									value={email}
+									onChange={e => setEmail(e.target.value)}
 								/>
 								<Form.Input
 									fluid
